@@ -56,7 +56,8 @@ table(dataset$female,dataset$educ2) #Use table to get counts
 #--------------------------------------------------------------------------------------------------------------------#
 ####### Let's run a linear regression now! Let's regress log salary on sex to see 
 ####### is there a difference in log salary between males and females
-####### To create a new variable in our data, all we have to do is use the $ operator and call it a new thing
+####### To create a new variable in our data frame, all we have to do is use the $ operator and call it a new thing
+####### Note it has to be of the data frame class (more on this later)
 ##
 dataset$logsal <- log(dataset$salary)
 Model <- lm(logsal~female,data=dataset)
@@ -64,7 +65,8 @@ summary(Model)
 
 ####### You'll notice the summary command did something different on the model 
 ####### than what happened when we ran summary command on the dataset
-####### That's because R 
+####### That's because R has different functions to handle different classes even though on the surface it looks
+####### like the same class.
 ##
 class(dataset)
 class(Model)
@@ -88,9 +90,9 @@ anova(Model,Model2)
 n<-dim(dataset)[2]
 dataset2<-dataset[1:n,]
 
-Model2<-lm(y~x,data=dataset2)
-summary(Model2)
-anova(Model2)
+Model3<-lm(y~x,data=dataset2)
+summary(Model3)
+anova(Model3)
 
 #--------------------------------------------------------------------------------------------------------------------#
 ####### How to write a function
@@ -243,6 +245,7 @@ summary( fit2 )
 ####### Linear Mixed Effects
 ##
 ####### Is a random intercepts AND slopes model justified?
+##
 YBData1<-YBData[-c(which(is.na(YBData$year))), ]
 fit3<-lme( revolutions ~ I(year-1950),
                method = "REML",
@@ -255,4 +258,21 @@ fit4<-lme( revolutions ~ I(year-1950),
            data = YBData1 )
 anova(fit3,fit4)
 
-####### By now, we should have the hour mark. This is probably where I'm going to leave off. Thank you for listening.
+####### How to run a for loop in R
+n<-100
+for(i in 1:n){
+  print(i)
+  if(i==10){
+    browser()
+  }else{
+    
+  }
+}
+
+
+####### By now, we should have hit the hour mark. This is probably where I'm going to leave off. Thank you for listening.
+
+####### What to do when you have an error
+# 1) Google the error
+# 2) If the answer isn't obvious, use debuggers such as options(error=recover) or browser() to check
+# 3) Email the stats consultant at jessl19@uci.edu 
